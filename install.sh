@@ -1,6 +1,6 @@
 #!/bin/bash -ex
 
-# Use this with TBD invocation
+# Use this with 'curl -fsSL https://raw.githubusercontent.com/jaygreco/omz-config/main/install.sh | sh'
 
 install_tailscale() {
     if [[ ! $(which tailscale) ]]; then
