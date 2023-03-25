@@ -16,11 +16,14 @@ export PS1="$PROMPT"
 
 if [[ $(uname) == "Darwin" ]]; then
     # Aliases for MacOS only
-    alias sublime="subl"
-    alias brew-packages="brew list | xargs brew info | egrep --color '\d*\.\d*(KB|MB|GB)'"
-
     export PATH="/opt/homebrew/bin:$PATH"
-    export PATH="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin:$PATH"
+    export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
+
+    alias sublime="subl"
+
+    brew-packages() {
+        brew list | xargs brew info | egrep --color '\d*\.\d*(KB|MB|GB)'
+    }
 else
     # Linux only aliases
     alias open="code -g"

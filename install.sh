@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 # Use this with 'curl -fsSL https://raw.githubusercontent.com/jaygreco/omz-config/main/install.sh | sh'
 
@@ -86,23 +86,22 @@ if [[ ! $(which fzf) ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf $FZF_PATH
     $FZF_PATH/install --key-bindings --completion --no-update-rc
 fi
+
 # Install tailscale (check)
-echo "Do you want to install tailscale?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) install_tailscale; break;;
-        No ) break;;
-    esac
-done
+read -p "Install tailscale? [y/n] " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    install_tailscale
+fi
 
 # Configure git (check)
-echo "Do you want to configure git?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) configure_git; break;;
-        No ) break;;
-    esac
-done
+read -p "Configure git? [y/n] " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    configure_git
+fi
 
 # Remind to source .zshrc
 echo "Done! Close and reopen this shell, or 'source ~/.zshrc'."
