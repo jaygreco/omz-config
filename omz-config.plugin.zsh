@@ -18,6 +18,8 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}*"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 
+# Set autoupdate frequency
+export UPDATE_ZSH_DAYS=1
 
 if [[ $(uname) == "Darwin" ]]; then
     # Aliases for MacOS only
