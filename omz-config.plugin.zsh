@@ -11,8 +11,13 @@ del-knownhost() {
 }
 
 # Prompt config
-export PROMPT="%(?.%F{green}➜.%F{red}%? ➜)%f [%~] $program %#%{$fg[default]%} "
-export PS1="$PROMPT"
+PROMPT='%(?.%F{green}➜.%F{red}%? ➜)%f [%~$(git_prompt_info)] $program %#%{$fg[default]%} '
+
+ZSH_THEME_GIT_PROMPT_PREFIX=":%{$fg[blue]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}*"
+ZSH_THEME_GIT_PROMPT_CLEAN=""
+
 
 if [[ $(uname) == "Darwin" ]]; then
     # Aliases for MacOS only
