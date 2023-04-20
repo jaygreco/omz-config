@@ -6,7 +6,7 @@ alias dirsize="sudo du -h . --max-depth=1"
 alias clear="echo 'nope'"
 
 del-knownhost() {
-    sed -i"bak -e "$1d" ~/.ssh/known_hosts"
+    sed -i'.bak' -e "$1d" ~/.ssh/known_hosts
     rm ~/.ssh/known_hosts.bak
 }
 
@@ -20,6 +20,7 @@ ZSH_THEME_GIT_PROMPT_CLEAN=""
 
 # Set autoupdate frequency
 export UPDATE_ZSH_DAYS=1
+export DISABLE_UPDATE_PROMPT=true
 
 if [[ $(uname) == "Darwin" ]]; then
     # Aliases for MacOS only
