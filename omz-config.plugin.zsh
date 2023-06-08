@@ -10,6 +10,42 @@ del-knownhost() {
     rm ~/.ssh/known_hosts.bak
 }
 
+alert() {
+    # Capture command
+    CMD="$*"
+    START=$SECONDS
+    
+    eval "$CMD"
+
+    # Capture return value
+    STATUS="$?"
+    T=$((SECONDS-START))
+    >&2 echo "$CMD: $STATUS in $T s"
+
+    # Print a warning message if the webhook URL doesn't exist
+    if [[ -z "$ALERT_WEBOOK_URL" ]]; then
+        >&2 echo "WARN: ALERT_WEBOOK_URL is missing. No message will be sent."
+    else
+        # Capture success/fail
+        if [[ $STATUS -eq 0 ]]; then
+            RES="✅"
+        else 
+            RES="❌"
+        fi
+
+        # Generate message
+        MSG="has finished in $T sec with exit code:"
+
+        # Format message properly for each service
+        case "$ALERT_WEBOOK_URL" in 
+            *"discord"*) JSON="{\"content\":\"$RES \`$CMD\` $MSG \`$STATUS\`\"}";;
+            *"slack"*) JSON="{\"message\":\"$MSG\", \"cmd\":\"$CMD\", \"result\":\"$RES\", \"exit_code\":\"$STATUS\"}";;
+        esac
+
+        curl -d "$JSON" -H "Content-Type: application/json" -X POST $ALERT_WEBOOK_URL
+    fi
+}
+
 # Prompt config
 PROMPT='%(?.%F{green}➜.%F{red}%? ➜)%f [%~$(git_prompt_info)] $program %#%{$fg[default]%} '
 
