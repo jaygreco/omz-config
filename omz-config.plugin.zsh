@@ -33,9 +33,12 @@ alert() {
             RES="❌"
         fi
 
-        # Generate message
-        MSG="has finished in $T sec with exit code:"
+        # Get hostname
+        which hostname &> /dev/null && readonly HOSTNAME="on $(hostname)"
 
+        # Generate message
+        MSG="has finished $HOSTNAME in $T sec with exit code:"
+        
         # Format message properly for each service
         case "$ALERT_WEBOOK_URL" in 
             *"discord"*) JSON="{\"content\":\"$RES \`$CMD\` $MSG \`$STATUS\`\"}";;
